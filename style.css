@@ -78,6 +78,7 @@ hr {
 .email-btn { background-color: #dc3545; }
 .linkedin-btn { background-color: #0077b5; }
 .calendar-btn { background-color: #ffc107; color: #343a40; }
+.prezi-btn {background-color: #0077b5; }
 
 .link-btn:hover {
     filter: brightness(1.1);
