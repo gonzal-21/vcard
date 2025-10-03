@@ -79,6 +79,7 @@ hr {
 .linkedin-btn { background-color: #0077b5; }
 .prezi-btn { background-color: #3D5A80; }
 .calendar-btn { background-color: #ffc107; color: #343a40; }
+.document-btn { background-color: #28a745; }
 
 .link-btn:hover {
     filter: brightness(1.1);
@@ -102,6 +103,12 @@ hr {
 }
 
 .services-section h2, .payments-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #495057;
+}
+
+.documents-section h2 {
     font-size: 1.5em;
     margin-bottom: 15px;
     color: #495057;
