@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vCard y Estadísticas de Guiado</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📇 vCard y Estadísticas de Guiado</h1>
+            <p>Gonzalo Emilio Frías Ojeda - Guía en Torres del Paine</p>
+        </header>
+
+        <!-- Sección vCard -->
+        <section id="vcard">
+            <h2>📇 Mi Información de Contacto</h2>
+            <p><strong>Nombre:</strong> Gonzalo Emilio Frías Ojeda</p>
+            <p><strong>Teléfono:</strong> +56 9 6132 4561</p>
+            <p><strong>Email:</strong> friasgonzalo21@gmail.com</p>
+            <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/gonzalof21/">Perfil de LinkedIn</a></p>
+            <p><strong>Descripción:</strong> Explora la Patagonia con un experto local.</p>
+        </section>
+
+        <!-- Sección Gráficos Estadísticos -->
+        <section id="estadisticas">
+            <h2>📊 Estadísticas de Guiado</h2>
+            <canvas id="chartServicios" width="400" height="200"></canvas>
+            <canvas id="chartTipos" width="400" height="200"></canvas>
+        </section>
+
+        <!-- Sección Análisis Estadístico -->
+        <section id="analisis">
+            <h2>📈 Análisis Estadístico</h2>
+            <p>Este análisis incluye correlaciones y una regresión lineal entre los datos de servicios guiados y la economía de los turistas alemanes en comparación con Puerto Natales.</p>
+        </section>
+    </div>
+
+    <script>
+        // Gráfico de barras - Tipos de Servicios
+        const ctxServicios = document.getElementById('chartServicios').getContext('2d');
+        new Chart(ctxServicios, {
+            type: 'bar',
+            data: {
+                labels: ['Trekking', 'City Tours', 'Avistamiento'],
+                datasets: [{
+                    label: 'Ingresos en CLP',
+                    data: [5000000, 2000000, 3000000],
+                    backgroundColor: ['#74b9ff', '#55efc4', '#ffeaa7'],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                }
+            }
+        });
+
+        // Gráfico de torta - Tipos de Turismo
+        const ctxTipos = document.getElementById('chartTipos').getContext('2d');
+        new Chart(ctxTipos, {
+            type: 'pie',
+            data: {
+                labels: ['Nacionales', 'Extranjeros'],
+                datasets: [{
+                    label: 'Distribución de Turistas',
+                    data: [30, 70],
+                    backgroundColor: ['#00cec9', '#fd79a8'],
+                }]
+            },
+            options: {
+                responsive: true,
+            }
+        });
+    </script>
+</body>
+</html>
