@@ -347,6 +347,23 @@ hr {
     margin-right: 10px;
 }
 
+.service-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.service-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.service-link i {
+    font-size: 0.8em;
+    margin-left: 5px;
+}
+
 .qr-container {
     display: flex;
     justify-content: center;
@@ -825,6 +842,671 @@ hr {
     }
     
     .exchange-calculator input {
+        width: 100%;
+    }
+}
+
+/* W Circuit Page Styles */
+.w-circuit-page {
+    max-width: 1200px;
+    text-align: left;
+}
+
+.w-circuit-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    border-radius: 15px;
+}
+
+.back-link {
+    display: inline-block;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-weight: 500;
+    transition: transform 0.3s ease;
+}
+
+.back-link:hover {
+    transform: translateX(-5px);
+}
+
+.back-link i {
+    margin-right: 8px;
+}
+
+.w-circuit-header h1 {
+    font-size: 2.5em;
+    margin: 10px 0;
+    color: white;
+}
+
+.w-circuit-header h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+    opacity: 0.9;
+}
+
+.subtitle {
+    font-size: 1.1em;
+    opacity: 0.9;
+    margin-top: 15px;
+}
+
+/* Quick Facts */
+.quick-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.fact-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fact-card i {
+    font-size: 2.5em;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.fact-value {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #343a40;
+    margin: 10px 0;
+}
+
+.fact-label {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+/* Content Sections */
+.content-section {
+    background: white;
+    padding: 30px;
+    margin: 30px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.content-section h3 {
+    font-size: 1.8em;
+    color: #007bff;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.content-section h3 i {
+    font-size: 1.2em;
+}
+
+.highlight-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.highlight-list li {
+    padding: 10px 0;
+    padding-left: 30px;
+    position: relative;
+}
+
+.highlight-list li:before {
+    content: "▶";
+    position: absolute;
+    left: 0;
+    color: #007bff;
+}
+
+/* Day Cards */
+.day-card {
+    background: #f8f9fa;
+    border-left: 4px solid #007bff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
+.day-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.day-number {
+    background: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.day-route {
+    font-weight: 600;
+    color: #343a40;
+    flex: 1;
+}
+
+.day-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin: 15px 0;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9em;
+}
+
+.detail-row i {
+    color: #007bff;
+    min-width: 20px;
+}
+
+.day-description {
+    margin-top: 15px;
+    color: #495057;
+    line-height: 1.6;
+}
+
+.day-description p {
+    margin: 10px 0;
+}
+
+/* Camping Grid */
+.camping-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.camping-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #dee2e6;
+    transition: all 0.3s ease;
+}
+
+.camping-card:hover {
+    border-color: #007bff;
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+.camping-card h4 {
+    color: #007bff;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.camping-info {
+    margin: 15px 0;
+}
+
+.camping-info div {
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.camping-info i {
+    color: #28a745;
+    min-width: 20px;
+}
+
+.camping-info i.fa-times {
+    color: #dc3545;
+}
+
+.camping-price {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: 600;
+    color: #007bff;
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* Weather Seasons */
+.weather-seasons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.season-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #dee2e6;
+}
+
+.season-card.best-season {
+    border-color: #28a745;
+    background: linear-gradient(135deg, #d4edda 0%, #f8f9fa 100%);
+}
+
+.season-card.winter-season {
+    border-color: #6c757d;
+    background: linear-gradient(135deg, #e2e6ea 0%, #f8f9fa 100%);
+}
+
+.season-card h4 {
+    color: #343a40;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.season-info {
+    margin: 15px 0;
+}
+
+.season-info div {
+    padding: 8px 0;
+    font-size: 0.9em;
+}
+
+.season-info i {
+    margin-right: 10px;
+    color: #007bff;
+}
+
+.season-note {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+    font-size: 0.9em;
+}
+
+.weather-tips {
+    background: #fff3cd;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.weather-tips h4 {
+    color: #856404;
+    margin-bottom: 15px;
+}
+
+.weather-tips ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.weather-tips li {
+    padding: 8px 0;
+    color: #856404;
+}
+
+/* Fitness Levels */
+.fitness-levels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.fitness-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #007bff;
+}
+
+.fitness-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.fitness-title i {
+    font-size: 1.5em;
+    color: #007bff;
+}
+
+.fitness-title h4 {
+    margin: 0;
+    color: #007bff;
+}
+
+.fitness-card ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.fitness-card li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+}
+
+.fitness-card li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Logistics */
+.logistics-section {
+    margin: 25px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.logistics-section h4 {
+    color: #007bff;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checklist {
+    list-style: none;
+    padding-left: 0;
+}
+
+.checklist li {
+    padding: 10px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.checklist i {
+    color: #28a745;
+    margin-top: 3px;
+}
+
+.equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.equipment-category {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.equipment-category h5 {
+    color: #007bff;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.equipment-category ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.equipment-category li {
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+    font-size: 0.9em;
+}
+
+.equipment-category li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #007bff;
+}
+
+/* Safety Grid */
+.safety-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.safety-card {
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid;
+}
+
+.safety-card.danger {
+    background: #f8d7da;
+    border-color: #dc3545;
+}
+
+.safety-card.warning {
+    background: #fff3cd;
+    border-color: #ffc107;
+}
+
+.safety-card.info {
+    background: #d1ecf1;
+    border-color: #17a2b8;
+}
+
+.safety-card h4 {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.safety-card.danger h4 {
+    color: #721c24;
+}
+
+.safety-card.warning h4 {
+    color: #856404;
+}
+
+.safety-card.info h4 {
+    color: #0c5460;
+}
+
+.safety-card ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.safety-card li {
+    padding: 8px 0;
+    font-size: 0.9em;
+}
+
+/* Tips Grid */
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.tip-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.tip-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tip-card i {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+.tip-card h4 {
+    margin: 10px 0;
+    font-size: 1.2em;
+}
+
+.tip-card p {
+    font-size: 0.9em;
+    opacity: 0.95;
+    margin: 0;
+}
+
+/* Important Note */
+.important-note {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 5px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.important-note i {
+    color: #856404;
+    font-size: 1.5em;
+    margin-top: 2px;
+}
+
+.important-note strong {
+    color: #856404;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.cta-section h3 {
+    color: white;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
+.cta-section p {
+    font-size: 1.1em;
+    margin-bottom: 25px;
+    opacity: 0.95;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.secondary-btn {
+    background-color: white !important;
+    color: #007bff !important;
+}
+
+.secondary-btn:hover {
+    background-color: #f8f9fa !important;
+}
+
+/* Page Footer */
+.page-footer {
+    text-align: center;
+    padding: 30px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-top: 40px;
+}
+
+.page-footer p {
+    margin: 10px 0;
+    color: #6c757d;
+}
+
+.footer-note {
+    font-size: 0.85em;
+    font-style: italic;
+}
+
+/* Responsive adjustments for W Circuit page */
+@media (max-width: 768px) {
+    .w-circuit-header h1 {
+        font-size: 1.8em;
+    }
+    
+    .w-circuit-header h2 {
+        font-size: 1.2em;
+    }
+    
+    .quick-facts {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .day-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .day-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .camping-grid,
+    .weather-seasons,
+    .fitness-levels,
+    .safety-grid,
+    .tips-grid,
+    .equipment-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+    }
+    
+    .cta-buttons .link-btn {
         width: 100%;
     }
 }
