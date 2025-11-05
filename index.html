@@ -50,6 +50,57 @@
 
         <hr>
 
+        <!-- Exchange Rate Section -->
+        <div class="exchange-section">
+            <h2><i class="fas fa-dollar-sign"></i> Tipo de Cambio USD-CLP</h2>
+            <div id="exchange-widget">
+                <div class="exchange-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Cargando tipo de cambio...</p>
+                </div>
+            </div>
+            <p class="exchange-info">Información actualizada para tu planificación de viaje</p>
+        </div>
+
+        <hr>
+
+        <!-- Availability Section -->
+        <div class="availability-section">
+            <h2><i class="fas fa-bed"></i> Disponibilidad de Servicios</h2>
+            <div class="availability-grid">
+                <div class="availability-card">
+                    <div class="availability-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="availability-number" id="tours-available">8</div>
+                    <div class="availability-label">Tours Disponibles</div>
+                    <div class="availability-period">Esta Semana</div>
+                </div>
+                <div class="availability-card">
+                    <div class="availability-icon"><i class="fas fa-hotel"></i></div>
+                    <div class="availability-number" id="beds-available">24</div>
+                    <div class="availability-label">Camas Disponibles</div>
+                    <div class="availability-period">Próximos 7 días</div>
+                </div>
+                <div class="availability-card">
+                    <div class="availability-icon"><i class="fas fa-users"></i></div>
+                    <div class="availability-number" id="group-capacity">12</div>
+                    <div class="availability-label">Capacidad Grupos</div>
+                    <div class="availability-period">Por Tour</div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Weekly Offers Section -->
+        <div class="offers-section">
+            <h2><i class="fas fa-tag"></i> Ofertas de la Semana</h2>
+            <div id="weekly-offers" class="offers-container">
+                <!-- Offers will be loaded here -->
+            </div>
+        </div>
+
+        <hr>
+
    
         <div class="services-section">
           <h2><i class="fas fa-mountain"></i> Servicios Destacados</h2>
@@ -177,6 +228,200 @@
         
         // Load weather on page load
         document.addEventListener('DOMContentLoaded', fetchWeather);
+        
+        // Exchange Rate Widget using exchangerate-api.com (free tier)
+        async function fetchExchangeRate() {
+            const exchangeWidget = document.getElementById('exchange-widget');
+            
+            try {
+                // Using exchangerate-api.com free tier (1,500 requests/month)
+                const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+                
+                if (!response.ok) {
+                    throw new Error('Exchange rate unavailable');
+                }
+                
+                const data = await response.json();
+                displayExchangeRate(data);
+            } catch (error) {
+                // Fallback to demo data
+                displayDemoExchangeRate();
+            }
+        }
+        
+        function displayExchangeRate(data) {
+            const exchangeWidget = document.getElementById('exchange-widget');
+            const clpRate = data.rates.CLP;
+            const lastUpdate = new Date(data.time_last_updated * 1000);
+            const updateTime = lastUpdate.toLocaleDateString('es-CL', { 
+                day: 'numeric', 
+                month: 'short', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            const html = `
+                <div class="exchange-display">
+                    <div class="exchange-main">
+                        <div class="exchange-from">
+                            <span class="currency-symbol">$</span>
+                            <span class="currency-amount">1</span>
+                            <span class="currency-code">USD</span>
+                        </div>
+                        <div class="exchange-arrow"><i class="fas fa-exchange-alt"></i></div>
+                        <div class="exchange-to">
+                            <span class="currency-symbol">$</span>
+                            <span class="currency-amount">${clpRate.toFixed(0)}</span>
+                            <span class="currency-code">CLP</span>
+                        </div>
+                    </div>
+                    <div class="exchange-update">Actualizado: ${updateTime}</div>
+                    <div class="exchange-calculator">
+                        <input type="number" id="usd-input" placeholder="USD" value="100" min="0">
+                        <span class="calc-equals">=</span>
+                        <input type="number" id="clp-output" placeholder="CLP" readonly value="${(100 * clpRate).toFixed(0)}">
+                    </div>
+                </div>
+            `;
+            
+            exchangeWidget.innerHTML = html;
+            
+            // Add calculator functionality
+            const usdInput = document.getElementById('usd-input');
+            const clpOutput = document.getElementById('clp-output');
+            usdInput.addEventListener('input', (e) => {
+                const usdValue = parseFloat(e.target.value) || 0;
+                clpOutput.value = (usdValue * clpRate).toFixed(0);
+            });
+        }
+        
+        function displayDemoExchangeRate() {
+            const exchangeWidget = document.getElementById('exchange-widget');
+            const demoRate = 950; // Approximate demo rate
+            
+            const html = `
+                <div class="exchange-display">
+                    <div class="exchange-main">
+                        <div class="exchange-from">
+                            <span class="currency-symbol">$</span>
+                            <span class="currency-amount">1</span>
+                            <span class="currency-code">USD</span>
+                        </div>
+                        <div class="exchange-arrow"><i class="fas fa-exchange-alt"></i></div>
+                        <div class="exchange-to">
+                            <span class="currency-symbol">$</span>
+                            <span class="currency-amount">${demoRate}</span>
+                            <span class="currency-code">CLP</span>
+                        </div>
+                    </div>
+                    <div class="exchange-update">Datos de demostración</div>
+                    <div class="exchange-calculator">
+                        <input type="number" id="usd-input" placeholder="USD" value="100" min="0">
+                        <span class="calc-equals">=</span>
+                        <input type="number" id="clp-output" placeholder="CLP" readonly value="${100 * demoRate}">
+                    </div>
+                </div>
+            `;
+            
+            exchangeWidget.innerHTML = html;
+            
+            // Add calculator functionality
+            const usdInput = document.getElementById('usd-input');
+            const clpOutput = document.getElementById('clp-output');
+            usdInput.addEventListener('input', (e) => {
+                const usdValue = parseFloat(e.target.value) || 0;
+                clpOutput.value = (usdValue * demoRate).toFixed(0);
+            });
+        }
+        
+        // Weekly Offers - Can be updated via simple JSON or manually
+        function displayWeeklyOffers() {
+            const offersContainer = document.getElementById('weekly-offers');
+            
+            // This data can be easily updated or loaded from a JSON file
+            const offers = [
+                {
+                    title: 'Trekking Base Torres',
+                    discount: '15% OFF',
+                    description: 'Tour completo con guía experto',
+                    originalPrice: 85000,
+                    salePrice: 72250,
+                    available: true,
+                    badge: 'Popular'
+                },
+                {
+                    title: 'Circuito W - 4 días',
+                    discount: '10% OFF',
+                    description: 'Incluye alojamiento y comidas',
+                    originalPrice: 450000,
+                    salePrice: 405000,
+                    available: true,
+                    badge: 'Oferta'
+                },
+                {
+                    title: 'Avistamiento de Fauna',
+                    discount: '20% OFF',
+                    description: 'Experiencia fotográfica única',
+                    originalPrice: 60000,
+                    salePrice: 48000,
+                    available: true,
+                    badge: 'Nuevo'
+                }
+            ];
+            
+            let html = '';
+            offers.forEach(offer => {
+                html += `
+                    <div class="offer-card ${!offer.available ? 'offer-unavailable' : ''}">
+                        <div class="offer-badge">${offer.badge}</div>
+                        <div class="offer-discount">${offer.discount}</div>
+                        <h3 class="offer-title">${offer.title}</h3>
+                        <p class="offer-description">${offer.description}</p>
+                        <div class="offer-pricing">
+                            <span class="offer-original-price">$${offer.originalPrice.toLocaleString('es-CL')}</span>
+                            <span class="offer-sale-price">$${offer.salePrice.toLocaleString('es-CL')}</span>
+                        </div>
+                        <div class="offer-savings">Ahorras: $${(offer.originalPrice - offer.salePrice).toLocaleString('es-CL')} CLP</div>
+                        ${offer.available ? 
+                            '<a href="https://wa.me/56961324561?text=Hola,%20me%20interesa%20la%20oferta%20de%20' + encodeURIComponent(offer.title) + '" class="offer-btn" target="_blank"><i class="fab fa-whatsapp"></i> Reservar Ahora</a>' : 
+                            '<button class="offer-btn offer-btn-disabled" disabled>Agotado</button>'}
+                    </div>
+                `;
+            });
+            
+            offersContainer.innerHTML = html;
+        }
+        
+        // Availability counter animation
+        function animateCounter(elementId, targetValue, duration = 1000) {
+            const element = document.getElementById(elementId);
+            const startValue = 0;
+            const increment = targetValue / (duration / 16); // 60fps
+            let currentValue = startValue;
+            
+            const timer = setInterval(() => {
+                currentValue += increment;
+                if (currentValue >= targetValue) {
+                    element.textContent = targetValue;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(currentValue);
+                }
+            }, 16);
+        }
+        
+        // Load all widgets on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchExchangeRate();
+            displayWeeklyOffers();
+            
+            // Animate availability counters
+            setTimeout(() => {
+                animateCounter('tours-available', 8, 1500);
+                animateCounter('beds-available', 24, 1500);
+                animateCounter('group-capacity', 12, 1500);
+            }, 300);
+        });
     </script>
 </body>
 </html>

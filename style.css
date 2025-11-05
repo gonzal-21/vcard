@@ -269,3 +269,324 @@ hr {
         font-size: 0.75em;
     }
 }
+
+/* Exchange Rate Section Styles */
+.exchange-section {
+    margin: 25px 0;
+}
+
+.exchange-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #495057;
+}
+
+.exchange-info {
+    font-size: 0.9em;
+    color: #6c757d;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+.exchange-loading {
+    text-align: center;
+    padding: 30px;
+    color: #6c757d;
+}
+
+.exchange-loading i {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.exchange-display {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    border-radius: 12px;
+    padding: 20px;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.exchange-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.exchange-from, .exchange-to {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.currency-symbol {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+.currency-amount {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.currency-code {
+    font-size: 1em;
+    opacity: 0.9;
+}
+
+.exchange-arrow {
+    font-size: 1.5em;
+    opacity: 0.8;
+}
+
+.exchange-update {
+    text-align: center;
+    font-size: 0.85em;
+    opacity: 0.9;
+    margin-bottom: 15px;
+}
+
+.exchange-calculator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.exchange-calculator input {
+    width: 100px;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
+}
+
+.calc-equals {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* Availability Section Styles */
+.availability-section {
+    margin: 25px 0;
+}
+
+.availability-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #495057;
+}
+
+.availability-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.availability-card {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.availability-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.availability-icon {
+    font-size: 2em;
+    margin-bottom: 10px;
+    opacity: 0.9;
+}
+
+.availability-number {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.availability-label {
+    font-size: 0.9em;
+    margin: 5px 0;
+}
+
+.availability-period {
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin-top: 5px;
+}
+
+/* Weekly Offers Section Styles */
+.offers-section {
+    margin: 25px 0;
+}
+
+.offers-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #495057;
+}
+
+.offers-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.offer-card {
+    background: white;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.offer-card:hover {
+    border-color: #007bff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+.offer-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #ffc107;
+    color: #343a40;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.75em;
+    font-weight: bold;
+}
+
+.offer-discount {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+.offer-title {
+    margin: 30px 0 10px 0;
+    font-size: 1.2em;
+    color: #343a40;
+}
+
+.offer-description {
+    color: #6c757d;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+.offer-pricing {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.offer-original-price {
+    text-decoration: line-through;
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+.offer-sale-price {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.offer-savings {
+    background: #d4edda;
+    color: #155724;
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 0.85em;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.offer-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background: #25d366;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 15px;
+}
+
+.offer-btn:hover {
+    background: #20ba5a;
+}
+
+.offer-btn i {
+    margin-right: 8px;
+}
+
+.offer-btn-disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+}
+
+.offer-btn-disabled:hover {
+    background: #6c757d;
+}
+
+.offer-unavailable {
+    opacity: 0.6;
+}
+
+/* Responsive adjustments for new sections */
+@media (max-width: 600px) {
+    .exchange-main {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .currency-amount {
+        font-size: 2em;
+    }
+    
+    .availability-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .offers-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .exchange-calculator {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .exchange-calculator input {
+        width: 100%;
+    }
+}
