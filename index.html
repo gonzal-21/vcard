@@ -34,102 +34,103 @@
             </a>
         </div>
         
-        <hr>
+        <!-- Three Column Grid Layout -->
+        <div class="content-grid">
+            <!-- Column 1: Weather & Services -->
+            <div class="column column-1">
+                <!-- Weather Forecast Section -->
+                <div class="weather-section">
+                    <h2><i class="fas fa-cloud-sun"></i> Clima en Torres del Paine</h2>
+                    <div id="weather-widget">
+                        <div class="weather-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Cargando pronóstico del clima...</p>
+                        </div>
+                    </div>
+                    <p class="weather-info">Consulta el clima antes de tu aventura en la Patagonia</p>
+                </div>
 
-        <!-- Weather Forecast Section -->
-        <div class="weather-section">
-            <h2><i class="fas fa-cloud-sun"></i> Clima en Torres del Paine</h2>
-            <div id="weather-widget">
-                <div class="weather-loading">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Cargando pronóstico del clima...</p>
+                <!-- Services Section -->
+                <div class="services-section">
+                    <h2><i class="fas fa-mountain"></i> Servicios Destacados</h2>
+                    <ul>
+                        <li id="service1">Trekking Base Torres</li>
+                        <li id="service2">Circuito W</li>
+                        <li id="service3">City Tours - Museos - Faro</li>
+                        <li id="service4">Trekking Cerro Benítez</li>
+                        <li id="service5">Circuito Cuevas</li>
+                        <li id="service6">Mirador Cerro Dorotea</li>
+                        <li id="service7">Tours de fotografía y avistamiento de fauna</li>
+                        <li id="service8">Briefing Patagónico</li>
+                        <li id="service9">Experiencias personalizadas</li>
+                    </ul>
                 </div>
             </div>
-            <p class="weather-info">Consulta el clima antes de tu aventura en la Patagonia</p>
-        </div>
 
-        <hr>
+            <!-- Column 2: Exchange Rate & Availability -->
+            <div class="column column-2">
+                <!-- Exchange Rate Section -->
+                <div class="exchange-section">
+                    <h2><i class="fas fa-dollar-sign"></i> Tipo de Cambio USD-CLP</h2>
+                    <div id="exchange-widget">
+                        <div class="exchange-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Cargando tipo de cambio...</p>
+                        </div>
+                    </div>
+                    <p class="exchange-info">Información actualizada para tu planificación de viaje</p>
+                </div>
 
-        <!-- Exchange Rate Section -->
-        <div class="exchange-section">
-            <h2><i class="fas fa-dollar-sign"></i> Tipo de Cambio USD-CLP</h2>
-            <div id="exchange-widget">
-                <div class="exchange-loading">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Cargando tipo de cambio...</p>
+                <!-- Availability Section -->
+                <div class="availability-section">
+                    <h2><i class="fas fa-bed"></i> Disponibilidad de Servicios</h2>
+                    <div class="availability-grid">
+                        <div class="availability-card">
+                            <div class="availability-icon"><i class="fas fa-calendar-check"></i></div>
+                            <div class="availability-number" id="tours-available">8</div>
+                            <div class="availability-label">Tours Disponibles</div>
+                            <div class="availability-period">Esta Semana</div>
+                        </div>
+                        <div class="availability-card">
+                            <div class="availability-icon"><i class="fas fa-hotel"></i></div>
+                            <div class="availability-number" id="beds-available">24</div>
+                            <div class="availability-label">Camas Disponibles</div>
+                            <div class="availability-period">Próximos 7 días</div>
+                        </div>
+                        <div class="availability-card">
+                            <div class="availability-icon"><i class="fas fa-users"></i></div>
+                            <div class="availability-number" id="group-capacity">12</div>
+                            <div class="availability-label">Capacidad Grupos</div>
+                            <div class="availability-period">Por Tour</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <p class="exchange-info">Información actualizada para tu planificación de viaje</p>
-        </div>
 
-        <hr>
+            <!-- Column 3: Offers & Payments -->
+            <div class="column column-3">
+                <!-- Weekly Offers Section -->
+                <div class="offers-section">
+                    <h2><i class="fas fa-tag"></i> Ofertas de la Semana</h2>
+                    <div id="weekly-offers" class="offers-container">
+                        <!-- Offers will be loaded here -->
+                    </div>
+                </div>
 
-        <!-- Availability Section -->
-        <div class="availability-section">
-            <h2><i class="fas fa-bed"></i> Disponibilidad de Servicios</h2>
-            <div class="availability-grid">
-                <div class="availability-card">
-                    <div class="availability-icon"><i class="fas fa-calendar-check"></i></div>
-                    <div class="availability-number" id="tours-available">8</div>
-                    <div class="availability-label">Tours Disponibles</div>
-                    <div class="availability-period">Esta Semana</div>
-                </div>
-                <div class="availability-card">
-                    <div class="availability-icon"><i class="fas fa-hotel"></i></div>
-                    <div class="availability-number" id="beds-available">24</div>
-                    <div class="availability-label">Camas Disponibles</div>
-                    <div class="availability-period">Próximos 7 días</div>
-                </div>
-                <div class="availability-card">
-                    <div class="availability-icon"><i class="fas fa-users"></i></div>
-                    <div class="availability-number" id="group-capacity">12</div>
-                    <div class="availability-label">Capacidad Grupos</div>
-                    <div class="availability-period">Por Tour</div>
+                <!-- Payments Section -->
+                <div class="payments-section">
+                    <h2><i class="fas fa-qrcode"></i> Pagos y Reservas</h2>
+                    <div class="qr-container">
+                        <div class="qr-item">
+                            <img src="qr-pagos.png" alt="Código QR para pagos">
+                            <p>¡Reserva tu tour escaneando este QR!</p>
+                        </div>
+                    </div>
+                    <a href="https://calendar.google.com/calendar/u/1?cid=NjMwZjkyZjc1OTMwNWNmODdlMjZiZjVhYWVmOTAyNmZmNmQxYmYxNjc4MjViZDQwYzdhNTI2OWIxODZkNjNjN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" class="link-btn calendar-btn">
+                        <i class="fas fa-calendar-alt"></i> Ver mi disponibilidad
+                    </a>
                 </div>
             </div>
-        </div>
-
-        <hr>
-
-        <!-- Weekly Offers Section -->
-        <div class="offers-section">
-            <h2><i class="fas fa-tag"></i> Ofertas de la Semana</h2>
-            <div id="weekly-offers" class="offers-container">
-                <!-- Offers will be loaded here -->
-            </div>
-        </div>
-
-        <hr>
-
-   
-        <div class="services-section">
-          <h2><i class="fas fa-mountain"></i> Servicios Destacados</h2>
-          <ul>
-                <li id="service1">Trekking Base Torres</li>
-                <li id="service2">Circuito W</li>
-                <li id="service3">City Tours - Museos - Faro</li>
-                <li id="service4">Trekking Cerro Benítez</li>
-                <li id="service5">Circuito Cuevas</li>
-                <li id="service6">Mirador Cerro Dorotea</li>
-                <li id="service7">Tours de fotografía y avistamiento de fauna</li>
-                <li id="service8">Briefing Patagónico</li>
-                <li id="service9">Experiencias personalizadas</li>
-          </ul>
-        </div>
-
-
-        
-        <div class="payments-section">
-            <h2><i class="fas fa-qrcode"></i> Pagos y Reservas</h2>
-            <div class="qr-container">
-                <div class="qr-item">
-                    <img src="qr-pagos.png" alt="Código QR para pagos">
-                    <p>¡Reserva tu tour escaneando este QR!</p>
-                </div>
-            </div>
-            <a href="https://calendar.google.com/calendar/u/1?cid=NjMwZjkyZjc1OTMwNWNmODdlMjZiZjVhYWVmOTAyNmZmNmQxYmYxNjc4MjViZDQwYzdhNTI2OWIxODZkNjNjN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" class="link-btn calendar-btn">
-                <i class="fas fa-calendar-alt"></i> Ver mi disponibilidad
-            </a>
         </div>
     </div>
 

@@ -4,9 +4,6 @@ body {
     color: #343a40;
     margin: 0;
     padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
 }
 
@@ -16,9 +13,38 @@ body {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     padding: 30px;
     width: 100%;
-    max-width: 450px;
+    max-width: 1400px;
+    margin: 0 auto;
     text-align: center;
     box-sizing: border-box;
+}
+
+/* Three column grid layout */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 30px;
+    text-align: left;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Visual separation for sections within columns */
+.weather-section,
+.exchange-section,
+.availability-section,
+.offers-section,
+.services-section,
+.payments-section {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .profile-section {
@@ -171,7 +197,7 @@ hr {
 
 .weather-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
     margin: 15px 0;
 }
@@ -384,9 +410,9 @@ hr {
 }
 
 .availability-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .availability-card {
@@ -439,8 +465,8 @@ hr {
 }
 
 .offers-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 15px;
 }
 
@@ -563,6 +589,24 @@ hr {
 }
 
 /* Responsive adjustments for new sections */
+@media (max-width: 1200px) {
+    .content-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .card {
+        padding: 20px;
+    }
+}
+
 @media (max-width: 600px) {
     .exchange-main {
         flex-direction: column;
