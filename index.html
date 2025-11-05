@@ -36,6 +36,20 @@
         
         <hr>
 
+        <!-- Weather Forecast Section -->
+        <div class="weather-section">
+            <h2><i class="fas fa-cloud-sun"></i> Clima en Torres del Paine</h2>
+            <div id="weather-widget">
+                <div class="weather-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Cargando pronóstico del clima...</p>
+                </div>
+            </div>
+            <p class="weather-info">Consulta el clima antes de tu aventura en la Patagonia</p>
+        </div>
+
+        <hr>
+
    
         <div class="services-section">
           <h2><i class="fas fa-mountain"></i> Servicios Destacados</h2>
@@ -67,5 +81,98 @@
             </a>
         </div>
     </div>
+
+    <script>
+        // Weather Forecast using OpenWeatherMap API
+        // Torres del Paine coordinates (approximate)
+        const lat = -51.0;
+        const lon = -73.0;
+        const API_KEY = 'YOUR_API_KEY_HERE'; // Users should replace this with their own free API key from openweathermap.org
+        
+        async function fetchWeather() {
+            const weatherWidget = document.getElementById('weather-widget');
+            
+            try {
+                // Using a demo mode with fallback data for demonstration
+                // In production, users should get their free API key from https://openweathermap.org/api
+                const response = await fetch(
+                    `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${API_KEY}`
+                );
+                
+                if (!response.ok) {
+                    throw new Error('API key required');
+                }
+                
+                const data = await response.json();
+                displayWeather(data);
+            } catch (error) {
+                // Fallback to demo data if API key is not configured
+                displayDemoWeather();
+            }
+        }
+        
+        function displayWeather(data) {
+            const weatherWidget = document.getElementById('weather-widget');
+            const forecasts = data.list.slice(0, 5); // Get next 5 forecasts (15 hours)
+            
+            let html = '<div class="weather-grid">';
+            
+            forecasts.forEach((forecast, index) => {
+                const date = new Date(forecast.dt * 1000);
+                const hour = date.getHours();
+                const temp = Math.round(forecast.main.temp);
+                const description = forecast.weather[0].description;
+                const icon = forecast.weather[0].icon;
+                const windSpeed = Math.round(forecast.wind.speed * 3.6); // m/s to km/h
+                
+                html += `
+                    <div class="weather-card">
+                        <div class="weather-time">${index === 0 ? 'Ahora' : hour + ':00'}</div>
+                        <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}" class="weather-icon">
+                        <div class="weather-temp">${temp}°C</div>
+                        <div class="weather-desc">${description}</div>
+                        <div class="weather-wind"><i class="fas fa-wind"></i> ${windSpeed} km/h</div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            weatherWidget.innerHTML = html;
+        }
+        
+        function displayDemoWeather() {
+            const weatherWidget = document.getElementById('weather-widget');
+            
+            // Demo weather data for Torres del Paine (typical conditions)
+            const demoForecasts = [
+                { time: 'Ahora', icon: '03d', temp: 12, desc: 'parcialmente nublado', wind: 25 },
+                { time: '15:00', icon: '04d', temp: 14, desc: 'nublado', wind: 30 },
+                { time: '18:00', icon: '10d', temp: 10, desc: 'lluvia ligera', wind: 35 },
+                { time: '21:00', icon: '04n', temp: 7, desc: 'nublado', wind: 28 },
+                { time: '00:00', icon: '02n', temp: 5, desc: 'algo de nubes', wind: 22 }
+            ];
+            
+            let html = '<div class="weather-grid">';
+            
+            demoForecasts.forEach(forecast => {
+                html += `
+                    <div class="weather-card">
+                        <div class="weather-time">${forecast.time}</div>
+                        <img src="https://openweathermap.org/img/wn/${forecast.icon}@2x.png" alt="${forecast.desc}" class="weather-icon">
+                        <div class="weather-temp">${forecast.temp}°C</div>
+                        <div class="weather-desc">${forecast.desc}</div>
+                        <div class="weather-wind"><i class="fas fa-wind"></i> ${forecast.wind} km/h</div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            html += '<div class="weather-demo-note"><i class="fas fa-info-circle"></i> Datos de demostración. Para datos en tiempo real, configura tu API key gratuita de <a href="https://openweathermap.org/api" target="_blank">OpenWeatherMap</a></div>';
+            weatherWidget.innerHTML = html;
+        }
+        
+        // Load weather on page load
+        document.addEventListener('DOMContentLoaded', fetchWeather);
+    </script>
 </body>
 </html>
