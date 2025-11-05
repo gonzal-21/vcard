@@ -32,6 +32,9 @@
             <a href="https://prezi.com/p/pldfhqtnq7su/igp-1/" target="_blank" class="link-btn prezi-btn">
                 <i class="fas fa-chalkboard-teacher"></i> Ver Presentación IGP
             </a>
+            <button id="tips-btn" class="link-btn tips-btn">
+                <i class="fas fa-hand-holding-usd"></i> Dejar Propina
+            </button>
         </div>
         
         <!-- Three Column Grid Layout -->
@@ -129,6 +132,38 @@
                     <a href="https://calendar.google.com/calendar/u/1?cid=NjMwZjkyZjc1OTMwNWNmODdlMjZiZjVhYWVmOTAyNmZmNmQxYmYxNjc4MjViZDQwYzdhNTI2OWIxODZkNjNjN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" class="link-btn calendar-btn">
                         <i class="fas fa-calendar-alt"></i> Ver mi disponibilidad
                     </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tips Modal -->
+    <div id="tips-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2><i class="fas fa-heart"></i> Dejar una Propina</h2>
+            <p>Si disfrutaste mi servicio como guía, puedes dejar una propina. ¡Tu apoyo es muy apreciado!</p>
+            
+            <div class="tips-options">
+                <button class="tip-amount" data-amount="5000">$5.000 CLP</button>
+                <button class="tip-amount" data-amount="10000">$10.000 CLP</button>
+                <button class="tip-amount" data-amount="20000">$20.000 CLP</button>
+                <button class="tip-amount" data-amount="50000">$50.000 CLP</button>
+            </div>
+            
+            <div class="custom-tip">
+                <label for="custom-amount">O ingresa un monto personalizado:</label>
+                <input type="number" id="custom-amount" placeholder="Monto en CLP" min="1000" step="1000">
+            </div>
+            
+            <div class="tip-payment-methods">
+                <h3>Métodos de Pago:</h3>
+                <a href="https://wa.me/56961324561?text=Hola,%20quiero%20dejar%20una%20propina" target="_blank" class="payment-method">
+                    <i class="fab fa-whatsapp"></i> WhatsApp (Transferencia)
+                </a>
+                <div class="payment-method qr-payment">
+                    <i class="fas fa-qrcode"></i> Escanear QR
+                    <img src="qr-pagos.png" alt="QR para propinas" class="tip-qr">
                 </div>
             </div>
         </div>
@@ -422,6 +457,42 @@
                 animateCounter('beds-available', 24, 1500);
                 animateCounter('group-capacity', 12, 1500);
             }, 300);
+            
+            // Tips Modal functionality
+            const tipsBtn = document.getElementById('tips-btn');
+            const tipsModal = document.getElementById('tips-modal');
+            const closeModal = document.querySelector('.close-modal');
+            const tipAmounts = document.querySelectorAll('.tip-amount');
+            const customAmount = document.getElementById('custom-amount');
+            
+            // Open modal
+            tipsBtn.addEventListener('click', () => {
+                tipsModal.style.display = 'flex';
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', () => {
+                tipsModal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === tipsModal) {
+                    tipsModal.style.display = 'none';
+                }
+            });
+            
+            // Handle predefined tip amounts
+            tipAmounts.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const amount = btn.dataset.amount;
+                    customAmount.value = amount;
+                    
+                    // Highlight selected amount
+                    tipAmounts.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                });
+            });
         });
     </script>
 </body>
