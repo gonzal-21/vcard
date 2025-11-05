@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotizador Torres del Paine - Gestión de Aventura</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* SPA Styles */
+        .spa-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .spa-header {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .spa-header h1 {
+            color: white;
+            margin: 0 0 10px 0;
+            font-size: 2em;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-tab {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #007bff;
+            color: #007bff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tab:hover, .nav-tab.active {
+            background: #007bff;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quote-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .service-card {
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .service-card:hover {
+            border-color: #007bff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.15);
+        }
+
+        .service-card.selected {
+            border-color: #007bff;
+            background: #e7f3ff;
+        }
+
+        .service-card .checkbox {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-card.selected .checkbox::after {
+            content: '✓';
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .service-card h4 {
+            color: #007bff;
+            margin: 0 0 10px 0;
+        }
+
+        .service-card .price {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 10px;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .calc-input-group {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .calc-input-group label {
+            display: block;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 8px;
+        }
+
+        .calc-input-group input,
+        .calc-input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .calc-input-group input:focus,
+        .calc-input-group select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .summary-panel {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .summary-panel h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .summary-items {
+            margin: 20px 0;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .summary-total {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid white;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .adventure-timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 40px;
+            bottom: -30px;
+            width: 2px;
+            background: #dee2e6;
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-marker {
+            width: 40px;
+            height: 40px;
+            background: #007bff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .timeline-content h4 {
+            color: #007bff;
+            margin-top: 0;
+        }
+
+        .expense-tracker {
+            margin-top: 20px;
+        }
+
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .expense-item input {
+            flex: 1;
+            margin-right: 15px;
+            padding: 8px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+        }
+
+        .expense-item button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .add-expense-btn {
+            width: 100%;
+            padding: 12px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #007bff;
+        }
+
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #007bff;
+            margin: 10px 0;
+        }
+
+        .stat-card .label {
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box i {
+            color: #007bff;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .nav-tab {
+                width: 100%;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card spa-container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver a la Virtual Card
+        </a>
+
+        <div class="spa-header">
+            <h1><i class="fas fa-calculator"></i> Cotizador Torres del Paine</h1>
+            <p>Planifica y gestiona tu aventura patagónica</p>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('cotizador')">
+                <i class="fas fa-file-invoice-dollar"></i> Cotizador
+            </button>
+            <button class="nav-tab" onclick="showTab('calculadora')">
+                <i class="fas fa-calculator"></i> Calculadora Económica
+            </button>
+            <button class="nav-tab" onclick="showTab('aventura')">
+                <i class="fas fa-hiking"></i> Gestión de Aventura
+            </button>
+        </div>
+
+        <!-- Tab 1: Cotizador de Servicios -->
+        <div id="cotizador" class="tab-content active">
+            <div class="quote-section">
+                <h2><i class="fas fa-list-check"></i> Selecciona tus Servicios</h2>
+                <p style="color: #6c757d; margin-bottom: 30px;">
+                    Elige los servicios que necesitas para tu aventura en Torres del Paine
+                </p>
+
+                <div class="service-selector" id="serviceSelector">
+                    <!-- Services will be loaded here by JavaScript -->
+                </div>
+
+                <h3 style="margin-top: 40px;"><i class="fas fa-cog"></i> Personaliza tu Experiencia</h3>
+                <div class="calculator-grid">
+                    <div class="calc-input-group">
+                        <label><i class="fas fa-users"></i> Número de Personas</label>
+                        <input type="number" id="numPeople" min="1" max="20" value="1" onchange="updateQuote()">
+                    </div>
+                    <div class="calc-input-group">
+                        <label><i class="fas fa-calendar-days"></i> Duración (días)</label>
+                        <input type="number" id="numDays" min="1" max="30" value="3" onchange="updateQuote()">
+                    </div>
+                    <div class="calc-input-group">
+                        <label><i class="fas fa-star"></i> Nivel de Confort</label>
+                        <select id="comfortLevel" onchange="updateQuote()">
+                            <option value="1">Básico</option>
+                            <option value="1.3" selected>Estándar</option>
+                            <option value="1.6">Premium</option>
+                            <option value="2">Lujo</option>
+                        </select>
+                    </div>
+                    <div class="calc-input-group">
+                        <label><i class="fas fa-calendar"></i> Temporada</label>
+                        <select id="season" onchange="updateQuote()">
+                            <option value="0.9">Baja (Mayo-Agosto)</option>
+                            <option value="1" selected>Media (Sept-Nov, Mar-Abr)</option>
+                            <option value="1.4">Alta (Dic-Feb)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Summary Panel -->
+                <div class="summary-panel" id="summaryPanel">
+                    <h3><i class="fas fa-receipt"></i> Resumen de Cotización</h3>
+                    <div class="summary-items" id="summaryItems">
+                        <p style="text-align: center; opacity: 0.8;">Selecciona servicios para ver el resumen</p>
+                    </div>
+                    <div class="summary-total" id="summaryTotal">
+                        Total: $0 CLP
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-primary" onclick="sendQuoteWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> Enviar Cotización por WhatsApp
+                    </button>
+                    <button class="btn-secondary" onclick="downloadQuote()">
+                        <i class="fas fa-download"></i> Descargar PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Calculadora Económica -->
+        <div id="calculadora" class="tab-content">
+            <div class="quote-section">
+                <h2><i class="fas fa-piggy-bank"></i> Calculadora Económica Torres del Paine</h2>
+                
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Planifica tu presupuesto:</strong> Calcula todos los gastos asociados a tu viaje
+                </div>
+
+                <h3>Costos Principales</h3>
+                <div class="calculator-grid">
+                    <div class="calc-input-group">
+                        <label><i class="fas fa-ticket"></i> Entrada al Parque</label>
+                        <input type="number" id="parkEntry" value="21000" onchange="calculateBudget()">
+                        <small style="color: #6c757d;">Extranjeros: $21,000 | Chilenos: $6,000</small>
+                    </div>
+                    <div class="calc-input-group">
+                        <label><i class="fas fa-bed"></i> Alojamiento por noche</label>
+                        <input type="number" id="accommodation" value="80000" onchange="calculateBudget()">
+                        <small style="color: #6c757d;">Camping: $8,000 - Refugio: $40,000 - Hotel: $150,000</small>
+                    </div>
+                    <div class="calc-input-group">
+                        <label><i class="fas fa-utensils"></i> Alimentación por día</label>
+                        <input type="number" id="food" value="25000" onchange="calculateBudget()">
+                    </div>
+                    <div class="calc-input-group">
+                        <label><i class="fas fa-bus"></i> Transporte Total</label>
+                        <input type="number" id="transport" value="60000" onchange="calculateBudget()">
+                        <small style="color: #6c757d;">Punta Arenas - Puerto Natales - Parque</small>
+                    </div>
+                    <div class="calc-input-group">
+                        <label><i class="fas fa-user-tie"></i> Guía (opcional)</label>
+                        <input type="number" id="guide" value="0" onchange="calculateBudget()">
+                        <small style="color: #6c757d;">$80,000 - $150,000 por día</small>
+                    </div>
+                    <div class="calc-input-group">
+                        <label><i class="fas fa-shopping-bag"></i> Equipo/Alquiler</label>
+                        <input type="number" id="equipment" value="0" onchange="calculateBudget()">
+                    </div>
+                </div>
+
+                <h3>Gastos Adicionales</h3>
+                <div class="expense-tracker" id="expenseTracker">
+                    <!-- Expenses will be added here -->
+                </div>
+                <button class="add-expense-btn" onclick="addExpense()">
+                    <i class="fas fa-plus"></i> Agregar Gasto Adicional
+                </button>
+
+                <div class="stats-grid" style="margin-top: 30px;">
+                    <div class="stat-card">
+                        <div class="label">Costo por Persona</div>
+                        <div class="value" id="costPerPerson">$0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Costo por Día</div>
+                        <div class="value" id="costPerDay">$0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Total General</div>
+                        <div class="value" id="totalBudget">$0</div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-primary" onclick="saveCalculation()">
+                        <i class="fas fa-save"></i> Guardar Cálculo
+                    </button>
+                    <button class="btn-secondary" onclick="resetCalculator()">
+                        <i class="fas fa-redo"></i> Reiniciar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Gestión de Aventura -->
+        <div id="aventura" class="tab-content">
+            <div class="quote-section">
+                <h2><i class="fas fa-map-marked-alt"></i> Gestión de tu Aventura</h2>
+                
+                <div class="info-box">
+                    <i class="fas fa-route"></i>
+                    <strong>Planifica tu itinerario:</strong> Organiza día a día tu aventura en Torres del Paine
+                </div>
+
+                <div class="adventure-timeline" id="adventureTimeline">
+                    <!-- Timeline will be generated by JavaScript -->
+                </div>
+
+                <button class="add-expense-btn" onclick="addDay()">
+                    <i class="fas fa-plus"></i> Agregar Día
+                </button>
+
+                <h3 style="margin-top: 40px;"><i class="fas fa-clipboard-check"></i> Checklist de Preparación</h3>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <div id="checklistItems">
+                        <!-- Checklist items will be added here -->
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-primary" onclick="exportItinerary()">
+                        <i class="fas fa-file-export"></i> Exportar Itinerario
+                    </button>
+                    <button class="btn-secondary" onclick="shareItinerary()">
+                        <i class="fas fa-share-alt"></i> Compartir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Services Database
+        const services = [
+            { id: 1, name: 'Trekking Base Torres', price: 180000, duration: 1, category: 'trek', icon: 'fa-mountain' },
+            { id: 2, name: 'Circuito W Completo', price: 450000, duration: 4, category: 'trek', icon: 'fa-hiking' },
+            { id: 3, name: 'Circuito O', price: 850000, duration: 8, category: 'trek', icon: 'fa-route' },
+            { id: 4, name: 'Mirador Cóndor', price: 120000, duration: 1, category: 'trek', icon: 'fa-eye' },
+            { id: 5, name: 'Glaciar Grey', price: 200000, duration: 1, category: 'tour', icon: 'fa-snowflake' },
+            { id: 6, name: 'Kayak Lago Grey', price: 150000, duration: 0.5, category: 'adventure', icon: 'fa-person-swimming' },
+            { id: 7, name: 'Fotografía Fauna', price: 180000, duration: 1, category: 'tour', icon: 'fa-camera' },
+            { id: 8, name: 'Transporte Ida/Vuelta', price: 60000, duration: 0, category: 'transport', icon: 'fa-bus' },
+            { id: 9, name: 'Equipo Completo', price: 80000, duration: 0, category: 'equipment', icon: 'fa-backpack' },
+            { id: 10, name: 'Seguro Aventura', price: 35000, duration: 0, category: 'insurance', icon: 'fa-shield-halved' }
+        ];
+
+        let selectedServices = [];
+        let expenses = [];
+        let adventureDays = 3;
+        let checklistItems = [
+            { text: 'Reservar alojamiento', checked: false },
+            { text: 'Comprar entrada al parque', checked: false },
+            { text: 'Preparar equipo de trekking', checked: false },
+            { text: 'Revisar pronóstico del clima', checked: false },
+            { text: 'Contratar seguro de viaje', checked: false },
+            { text: 'Empacar comida y snacks', checked: false }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadServices();
+            initializeAdventureTimeline();
+            renderChecklist();
+            calculateBudget();
+        });
+
+        // Load services into selector
+        function loadServices() {
+            const container = document.getElementById('serviceSelector');
+            container.innerHTML = services.map(service => `
+                <div class="service-card" onclick="toggleService(${service.id})" id="service-${service.id}">
+                    <div class="checkbox"></div>
+                    <h4><i class="fas ${service.icon}"></i> ${service.name}</h4>
+                    <p style="color: #6c757d; font-size: 0.9em;">
+                        ${service.duration > 0 ? service.duration + ' día(s)' : 'Servicio adicional'}
+                    </p>
+                    <div class="price">$${service.price.toLocaleString('es-CL')} CLP</div>
+                </div>
+            `).join('');
+        }
+
+        // Toggle service selection
+        function toggleService(serviceId) {
+            const index = selectedServices.indexOf(serviceId);
+            const card = document.getElementById('service-' + serviceId);
+            
+            if (index > -1) {
+                selectedServices.splice(index, 1);
+                card.classList.remove('selected');
+            } else {
+                selectedServices.push(serviceId);
+                card.classList.add('selected');
+            }
+            
+            updateQuote();
+        }
+
+        // Update quote calculation
+        function updateQuote() {
+            const numPeople = parseInt(document.getElementById('numPeople').value) || 1;
+            const numDays = parseInt(document.getElementById('numDays').value) || 1;
+            const comfortLevel = parseFloat(document.getElementById('comfortLevel').value) || 1;
+            const season = parseFloat(document.getElementById('season').value) || 1;
+
+            let subtotal = 0;
+            let itemsHTML = '';
+
+            selectedServices.forEach(serviceId => {
+                const service = services.find(s => s.id === serviceId);
+                if (service) {
+                    const serviceTotal = service.price * comfortLevel * season * numPeople;
+                    subtotal += serviceTotal;
+                    itemsHTML += `
+                        <div class="summary-item">
+                            <span><i class="fas ${service.icon}"></i> ${service.name} x${numPeople}</span>
+                            <span>$${serviceTotal.toLocaleString('es-CL')}</span>
+                        </div>
+                    `;
+                }
+            });
+
+            if (selectedServices.length === 0) {
+                document.getElementById('summaryItems').innerHTML = 
+                    '<p style="text-align: center; opacity: 0.8;">Selecciona servicios para ver el resumen</p>';
+                document.getElementById('summaryTotal').innerHTML = 'Total: $0 CLP';
+                return;
+            }
+
+            document.getElementById('summaryItems').innerHTML = itemsHTML;
+            document.getElementById('summaryTotal').innerHTML = 
+                `Total: $${subtotal.toLocaleString('es-CL')} CLP`;
+        }
+
+        // Send quote via WhatsApp
+        function sendQuoteWhatsApp() {
+            if (selectedServices.length === 0) {
+                alert('Por favor selecciona al menos un servicio');
+                return;
+            }
+
+            const numPeople = parseInt(document.getElementById('numPeople').value) || 1;
+            const numDays = parseInt(document.getElementById('numDays').value) || 1;
+            
+            let message = '🏔️ *Cotización Torres del Paine*\n\n';
+            message += `👥 Personas: ${numPeople}\n`;
+            message += `📅 Duración: ${numDays} días\n\n`;
+            message += '*Servicios seleccionados:*\n';
+
+            selectedServices.forEach(serviceId => {
+                const service = services.find(s => s.id === serviceId);
+                if (service) {
+                    message += `✅ ${service.name}\n`;
+                }
+            });
+
+            const total = document.getElementById('summaryTotal').textContent;
+            message += `\n${total}`;
+
+            const whatsappUrl = `https://wa.me/56961324561?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Download quote as PDF (simulated)
+        function downloadQuote() {
+            alert('Función de descarga PDF en desarrollo. Por ahora puedes capturar pantalla del resumen.');
+        }
+
+        // Calculator functions
+        function calculateBudget() {
+            const numPeople = parseInt(document.getElementById('numPeople').value) || 1;
+            const numDays = parseInt(document.getElementById('numDays').value) || 1;
+            
+            const parkEntry = parseInt(document.getElementById('parkEntry')?.value || 0);
+            const accommodation = parseInt(document.getElementById('accommodation')?.value || 0);
+            const food = parseInt(document.getElementById('food')?.value || 0);
+            const transport = parseInt(document.getElementById('transport')?.value || 0);
+            const guide = parseInt(document.getElementById('guide')?.value || 0);
+            const equipment = parseInt(document.getElementById('equipment')?.value || 0);
+
+            let additionalExpenses = 0;
+            expenses.forEach(exp => {
+                additionalExpenses += parseInt(exp.amount) || 0;
+            });
+
+            const dailyCosts = (accommodation + food) * numDays;
+            const onetime = parkEntry + transport + equipment + guide * numDays;
+            const total = (dailyCosts + onetime + additionalExpenses) * numPeople;
+
+            document.getElementById('costPerPerson').textContent = 
+                '$' + Math.round(total / numPeople).toLocaleString('es-CL');
+            document.getElementById('costPerDay').textContent = 
+                '$' + Math.round(total / numDays).toLocaleString('es-CL');
+            document.getElementById('totalBudget').textContent = 
+                '$' + total.toLocaleString('es-CL');
+        }
+
+        function addExpense() {
+            const id = Date.now();
+            expenses.push({ id, name: '', amount: 0 });
+            renderExpenses();
+        }
+
+        function removeExpense(id) {
+            expenses = expenses.filter(e => e.id !== id);
+            renderExpenses();
+            calculateBudget();
+        }
+
+        function renderExpenses() {
+            const container = document.getElementById('expenseTracker');
+            container.innerHTML = expenses.map(exp => `
+                <div class="expense-item">
+                    <input type="text" placeholder="Descripción" 
+                           value="${exp.name}" 
+                           onchange="updateExpense(${exp.id}, 'name', this.value)">
+                    <input type="number" placeholder="Monto" 
+                           value="${exp.amount}" 
+                           onchange="updateExpense(${exp.id}, 'amount', this.value); calculateBudget()">
+                    <button onclick="removeExpense(${exp.id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function updateExpense(id, field, value) {
+            const expense = expenses.find(e => e.id === id);
+            if (expense) {
+                expense[field] = value;
+            }
+        }
+
+        function saveCalculation() {
+            const calculation = {
+                timestamp: new Date().toISOString(),
+                numPeople: document.getElementById('numPeople').value,
+                numDays: document.getElementById('numDays').value,
+                expenses: expenses,
+                total: document.getElementById('totalBudget').textContent
+            };
+            
+            localStorage.setItem('lastCalculation', JSON.stringify(calculation));
+            alert('✅ Cálculo guardado exitosamente');
+        }
+
+        function resetCalculator() {
+            if (confirm('¿Estás seguro de reiniciar la calculadora?')) {
+                expenses = [];
+                renderExpenses();
+                document.getElementById('parkEntry').value = 21000;
+                document.getElementById('accommodation').value = 80000;
+                document.getElementById('food').value = 25000;
+                document.getElementById('transport').value = 60000;
+                document.getElementById('guide').value = 0;
+                document.getElementById('equipment').value = 0;
+                calculateBudget();
+            }
+        }
+
+        // Adventure Timeline
+        function initializeAdventureTimeline() {
+            renderTimeline();
+        }
+
+        function renderTimeline() {
+            const container = document.getElementById('adventureTimeline');
+            let html = '';
+            
+            for (let i = 1; i <= adventureDays; i++) {
+                html += `
+                    <div class="timeline-item">
+                        <div class="timeline-marker">${i}</div>
+                        <div class="timeline-content">
+                            <h4>Día ${i}</h4>
+                            <input type="text" placeholder="Actividad principal" 
+                                   style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #dee2e6; border-radius: 4px;"
+                                   id="day${i}-activity">
+                            <textarea placeholder="Notas y detalles..." 
+                                      style="width: 100%; padding: 10px; border: 1px solid #dee2e6; border-radius: 4px; min-height: 80px;"
+                                      id="day${i}-notes"></textarea>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function addDay() {
+            adventureDays++;
+            renderTimeline();
+        }
+
+        function renderChecklist() {
+            const container = document.getElementById('checklistItems');
+            container.innerHTML = checklistItems.map((item, index) => `
+                <div style="padding: 15px; background: white; border-radius: 8px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px;">
+                    <input type="checkbox" ${item.checked ? 'checked' : ''} 
+                           onchange="toggleChecklistItem(${index})"
+                           style="width: 20px; height: 20px; cursor: pointer;">
+                    <span style="flex: 1; ${item.checked ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${item.text}</span>
+                </div>
+            `).join('');
+        }
+
+        function toggleChecklistItem(index) {
+            checklistItems[index].checked = !checklistItems[index].checked;
+            renderChecklist();
+        }
+
+        function exportItinerary() {
+            alert('Función de exportación en desarrollo');
+        }
+
+        function shareItinerary() {
+            let message = '🏔️ *Itinerario Torres del Paine*\n\n';
+            for (let i = 1; i <= adventureDays; i++) {
+                const activity = document.getElementById(`day${i}-activity`)?.value || 'Sin planificar';
+                message += `*Día ${i}:* ${activity}\n`;
+            }
+            
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Tab switching
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
