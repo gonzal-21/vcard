@@ -213,7 +213,7 @@ hr {
     font-size: 0.85em;
     text-transform: capitalize;
     margin: 5px 0;
-    min-height: 2.4em;
+    min-height: 2.4em; /* Reserve space for 2 lines to maintain consistent card heights */
 }
 
 .weather-wind {

@@ -87,7 +87,10 @@
         // Torres del Paine coordinates (approximate)
         const lat = -51.0;
         const lon = -73.0;
-        const API_KEY = 'YOUR_API_KEY_HERE'; // Users should replace this with their own free API key from openweathermap.org
+        // NOTE: API keys in client-side code are visible to users. For production use,
+        // consider implementing a backend proxy to keep your API key secure.
+        // For personal/demo use with free tier limits, this approach is acceptable.
+        const API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your free API key from openweathermap.org
         
         async function fetchWeather() {
             const weatherWidget = document.getElementById('weather-widget');
@@ -100,7 +103,7 @@
                 );
                 
                 if (!response.ok) {
-                    throw new Error('API key required');
+                    throw new Error('Weather data unavailable');
                 }
                 
                 const data = await response.json();
@@ -113,7 +116,8 @@
         
         function displayWeather(data) {
             const weatherWidget = document.getElementById('weather-widget');
-            const forecasts = data.list.slice(0, 5); // Get next 5 forecasts (15 hours)
+            // Get next 5 forecast periods (typically 3-hour intervals)
+            const forecasts = data.list.slice(0, 5);
             
             let html = '<div class="weather-grid">';
             

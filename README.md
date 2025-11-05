@@ -34,6 +34,8 @@ The vCard includes a weather forecast widget powered by **OpenWeatherMap API**, 
 const API_KEY = 'your_actual_api_key_here';
 ```
 
+**Note on Security**: API keys placed in client-side JavaScript are visible to users. For personal use with the free tier (1,000 calls/day), this is acceptable. For production applications with sensitive data or higher usage, consider implementing a backend proxy to keep your API key secure.
+
 #### Free Tier Benefits
 - ✅ Up to 1,000 API calls per day
 - ✅ 5-day/3-hour forecast data
