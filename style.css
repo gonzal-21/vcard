@@ -16,7 +16,7 @@ body {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     padding: 30px;
     width: 100%;
-    max-width: 450px;
+    max-width: 900px;
     text-align: center;
     box-sizing: border-box;
 }
@@ -79,6 +79,7 @@ hr {
 .linkedin-btn { background-color: #0077b5; }
 .prezi-btn { background-color: #3D5A80; }
 .calendar-btn { background-color: #ffc107; color: #343a40; }
+.document-btn { background-color: #28a745; }
 
 .link-btn:hover {
     filter: brightness(1.1);
@@ -93,12 +94,20 @@ hr {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
+    text-align: left;
 }
 
 @media (min-width: 768px) {
     .main-grid {
         grid-template-columns: 1fr 1fr;
     }
+}
+
+.contact-section h2, .documents-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #495057;
+    text-align: center;
 }
 
 .services-section h2, .payments-section h2 {
