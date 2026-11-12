@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directorio de Comercios - Servicios Asociados</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Estilos adicionales para el directorio */
+        .directory-header {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 15px 15px 0 0;
+            margin: -30px -30px 30px -30px;
+        }
+
+        .directory-header h1 {
+            color: white;
+            margin: 0;
+            font-size: 2.2em;
+        }
+
+        .directory-header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+        }
+
+        .filter-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid #007bff;
+            background: white;
+            color: #007bff;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #007bff;
+            color: white;
+        }
+
+        .search-box {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .search-box button {
+            padding: 12px 24px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .directory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .business-card {
+            background: white;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .business-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-color: #007bff;
+        }
+
+        .business-card .category-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: #007bff;
+            color: white;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+        }
+
+        .business-card h3 {
+            color: #343a40;
+            margin: 10px 0;
+        }
+
+        .business-card .description {
+            color: #6c757d;
+            font-size: 0.95em;
+            margin: 10px 0;
+            line-height: 1.5;
+        }
+
+        .business-card .contact-info {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .business-card .contact-info i {
+            color: #007bff;
+        }
+
+        .form-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .form-section h2 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #0056b3;
+        }
+
+        .success-message {
+            display: none;
+            background: #28a745;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .error-message {
+            display: none;
+            background: #dc3545;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin: 20px 0;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .directory-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-buttons {
+                flex-direction: column;
+            }
+
+            .filter-btn {
+                width: 100%;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-box button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver a la Virtual Card
+        </a>
+
+        <div class="directory-header">
+            <h1><i class="fas fa-store"></i> Directorio de Comercios y Servicios</h1>
+            <p>Descubre nuestros partners asociados en Puerto Natales</p>
+        </div>
+
+        <!-- Sección de Filtros -->
+        <div class="filter-section">
+            <h3 style="text-align: center; margin-bottom: 15px;">
+                <i class="fas fa-filter"></i> Filtrar por Categoría
+            </h3>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-category="todos">
+                    <i class="fas fa-th"></i> Todos
+                </button>
+                <button class="filter-btn" data-category="alimentacion">
+                    <i class="fas fa-utensils"></i> Alimentación
+                </button>
+                <button class="filter-btn" data-category="salud">
+                    <i class="fas fa-medkit"></i> Salud
+                </button>
+                <button class="filter-btn" data-category="transporte">
+                    <i class="fas fa-bus"></i> Transporte
+                </button>
+                <button class="filter-btn" data-category="ecommerce">
+                    <i class="fas fa-shopping-cart"></i> E-Commerce
+                </button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Buscar comercio por nombre...">
+                <button onclick="searchBusinesses()">
+                    <i class="fas fa-search"></i> Buscar
+                </button>
+            </div>
+        </div>
+
+        <!-- Grid de Comercios -->
+        <div id="directoryGrid" class="directory-grid">
+            <!-- Los comercios se cargarán dinámicamente con JavaScript -->
+        </div>
+
+        <!-- Formulario de Inscripción -->
+        <div class="form-section" id="registrationForm">
+            <h2><i class="fas fa-handshake"></i> Únete como Comercio Asociado</h2>
+            <p style="text-align: center; color: #6c757d; margin-bottom: 30px;">
+                Completa el formulario para ser parte de nuestra red de servicios
+            </p>
+
+            <div id="successMessage" class="success-message">
+                <i class="fas fa-check-circle"></i> ¡Registro exitoso! Nos pondremos en contacto pronto.
+            </div>
+
+            <div id="errorMessage" class="error-message">
+                <i class="fas fa-exclamation-circle"></i> Por favor, completa todos los campos requeridos.
+            </div>
+
+            <form id="businessForm" onsubmit="return handleSubmit(event)">
+                <div class="form-group">
+                    <label for="businessName">
+                        <i class="fas fa-store"></i> Nombre del Comercio *
+                    </label>
+                    <input type="text" id="businessName" name="businessName" required 
+                           placeholder="Ej: Panadería El Refugio">
+                </div>
+
+                <div class="form-group">
+                    <label for="category">
+                        <i class="fas fa-tag"></i> Categoría *
+                    </label>
+                    <select id="category" name="category" required>
+                        <option value="">Selecciona una categoría</option>
+                        <option value="alimentacion">Alimentación</option>
+                        <option value="salud">Salud y Bienestar</option>
+                        <option value="transporte">Transporte</option>
+                        <option value="ecommerce">E-Commerce y Reventa</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">
+                        <i class="fas fa-align-left"></i> Descripción del Servicio *
+                    </label>
+                    <textarea id="description" name="description" required 
+                              placeholder="Describe brevemente los servicios que ofreces..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactName">
+                        <i class="fas fa-user"></i> Nombre de Contacto *
+                    </label>
+                    <input type="text" id="contactName" name="contactName" required 
+                           placeholder="Nombre del responsable">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">
+                        <i class="fas fa-envelope"></i> Email *
+                    </label>
+                    <input type="email" id="email" name="email" required 
+                           placeholder="correo@ejemplo.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">
+                        <i class="fas fa-phone"></i> Teléfono *
+                    </label>
+                    <input type="tel" id="phone" name="phone" required 
+                           placeholder="+56 9 XXXX XXXX">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">
+                        <i class="fas fa-map-marker-alt"></i> Dirección
+                    </label>
+                    <input type="text" id="address" name="address" 
+                           placeholder="Dirección en Puerto Natales (opcional)">
+                </div>
+
+                <div class="form-group">
+                    <label for="website">
+                        <i class="fas fa-globe"></i> Sitio Web
+                    </label>
+                    <input type="url" id="website" name="website" 
+                           placeholder="https://www.ejemplo.com (opcional)">
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Enviar Solicitud
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Base de datos de comercios (simulada)
+        const businesses = [
+            {
+                id: 1,
+                name: "Supermercado Patagonia",
+                category: "alimentacion",
+                description: "Provisiones completas para trekking y tours. Gran variedad de productos locales e importados.",
+                phone: "+56 61 241 1234",
+                email: "contacto@superpatagonia.cl"
+            },
+            {
+                id: 2,
+                name: "Restaurant Última Esperanza",
+                category: "alimentacion",
+                description: "Comida típica patagónica. Especialidad en cordero al palo y centolla.",
+                phone: "+56 61 241 2345",
+                email: "reservas@ultimaesperanza.cl"
+            },
+            {
+                id: 3,
+                name: "Panadería Don Pancho",
+                category: "alimentacion",
+                description: "Desayunos y snacks para viaje. Pan artesanal y repostería fresca diaria.",
+                phone: "+56 61 241 3456",
+                email: "info@donpancho.cl"
+            },
+            {
+                id: 4,
+                name: "Farmacia Cruz Verde Puerto Natales",
+                category: "salud",
+                description: "Medicamentos y primeros auxilios. Atención 24/7 para emergencias.",
+                phone: "+56 61 241 4567",
+                email: "puertonatales@cruzverde.cl"
+            },
+            {
+                id: 5,
+                name: "Centro Médico Patagonia",
+                category: "salud",
+                description: "Atención médica turística. Médicos con experiencia en medicina de montaña.",
+                phone: "+56 61 241 5678",
+                email: "atencion@centromedicopatagonia.cl"
+            },
+            {
+                id: 6,
+                name: "Fisioterapia Deportiva Austral",
+                category: "salud",
+                description: "Recuperación post-trekking. Masajes terapéuticos y rehabilitación.",
+                phone: "+56 61 241 6789",
+                email: "contacto@fisioaustral.cl"
+            },
+            {
+                id: 7,
+                name: "Transfer Torres Express",
+                category: "transporte",
+                description: "Traslados Punta Arenas - Puerto Natales. Servicio puerta a puerta.",
+                phone: "+56 9 8765 4321",
+                email: "reservas@torresexpress.cl"
+            },
+            {
+                id: 8,
+                name: "Buses Fernández",
+                category: "transporte",
+                description: "Traslados diarios a Torres del Paine. Horarios flexibles y cómodos.",
+                phone: "+56 61 241 7890",
+                email: "info@busesfernandez.cl"
+            },
+            {
+                id: 9,
+                name: "Rent a Car Patagonia 4x4",
+                category: "transporte",
+                description: "Alquiler de vehículos 4x4. GPS incluido y seguros completos.",
+                phone: "+56 61 241 8901",
+                email: "reservas@patagonia4x4.cl"
+            },
+            {
+                id: 10,
+                name: "Outdoor Shop Patagonia",
+                category: "ecommerce",
+                description: "Venta y alquiler de equipo outdoor. Las mejores marcas del mercado.",
+                phone: "+56 61 241 9012",
+                email: "ventas@outdoorpatagonia.cl"
+            },
+            {
+                id: 11,
+                name: "Artesanías Kawésqar",
+                category: "ecommerce",
+                description: "Souvenirs y artesanías patagónicas auténticas. Productos hechos a mano.",
+                phone: "+56 9 7654 3210",
+                email: "contacto@kawesqar.cl"
+            },
+            {
+                id: 12,
+                name: "Paquetes Torres del Paine",
+                category: "ecommerce",
+                description: "Tours + servicios complementarios. Paquetes todo incluido personalizables.",
+                phone: "+56 9 6543 2109",
+                email: "ventas@paquetestorres.cl"
+            }
+        ];
+
+        // Variables globales
+        let currentFilter = 'todos';
+        let currentSearch = '';
+
+        // Función para renderizar los comercios
+        function renderBusinesses() {
+            const grid = document.getElementById('directoryGrid');
+            let filteredBusinesses = businesses;
+
+            // Aplicar filtro de categoría
+            if (currentFilter !== 'todos') {
+                filteredBusinesses = filteredBusinesses.filter(b => b.category === currentFilter);
+            }
+
+            // Aplicar búsqueda
+            if (currentSearch) {
+                filteredBusinesses = filteredBusinesses.filter(b => 
+                    b.name.toLowerCase().includes(currentSearch.toLowerCase()) ||
+                    b.description.toLowerCase().includes(currentSearch.toLowerCase())
+                );
+            }
+
+            // Generar HTML
+            if (filteredBusinesses.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #6c757d;">
+                        <i class="fas fa-search" style="font-size: 3em; margin-bottom: 20px;"></i>
+                        <h3>No se encontraron comercios</h3>
+                        <p>Intenta con otro filtro o búsqueda</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredBusinesses.map(business => {
+                const categoryNames = {
+                    'alimentacion': 'Alimentación',
+                    'salud': 'Salud',
+                    'transporte': 'Transporte',
+                    'ecommerce': 'E-Commerce'
+                };
+
+                const categoryIcons = {
+                    'alimentacion': 'fa-utensils',
+                    'salud': 'fa-medkit',
+                    'transporte': 'fa-bus',
+                    'ecommerce': 'fa-shopping-cart'
+                };
+
+                return `
+                    <div class="business-card" onclick="showBusinessDetails(${business.id})">
+                        <div class="category-badge">
+                            <i class="fas ${categoryIcons[business.category]}"></i>
+                            ${categoryNames[business.category]}
+                        </div>
+                        <h3>${business.name}</h3>
+                        <p class="description">${business.description}</p>
+                        <div class="contact-info">
+                            <span><i class="fas fa-phone"></i> ${business.phone}</span>
+                            <span><i class="fas fa-envelope"></i> ${business.email}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Función para mostrar detalles del comercio
+        function showBusinessDetails(id) {
+            const business = businesses.find(b => b.id === id);
+            if (business) {
+                alert(`${business.name}\n\n${business.description}\n\nContacto:\nTeléfono: ${business.phone}\nEmail: ${business.email}`);
+            }
+        }
+
+        // Función para buscar comercios
+        function searchBusinesses() {
+            currentSearch = document.getElementById('searchInput').value;
+            renderBusinesses();
+        }
+
+        // Event listener para búsqueda en tiempo real
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            currentSearch = e.target.value;
+            renderBusinesses();
+        });
+
+        // Event listeners para filtros
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Actualizar estado de botones
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // Aplicar filtro
+                currentFilter = this.dataset.category;
+                renderBusinesses();
+            });
+        });
+
+        // Función para manejar el envío del formulario
+        function handleSubmit(event) {
+            event.preventDefault();
+
+            const form = document.getElementById('businessForm');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+
+            // Validar campos requeridos
+            const requiredFields = ['businessName', 'category', 'description', 'contactName', 'email', 'phone'];
+            let isValid = true;
+
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = '#dc3545';
+                } else {
+                    field.style.borderColor = '#dee2e6';
+                }
+            });
+
+            // Mostrar mensaje de error si falta información
+            if (!isValid) {
+                errorMsg.style.display = 'block';
+                successMsg.style.display = 'none';
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 5000);
+                return false;
+            }
+
+            // Simular envío exitoso
+            const formData = {
+                businessName: document.getElementById('businessName').value,
+                category: document.getElementById('category').value,
+                description: document.getElementById('description').value,
+                contactName: document.getElementById('contactName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                website: document.getElementById('website').value,
+                timestamp: new Date().toISOString()
+            };
+
+            // Guardar en localStorage (simulación)
+            const submissions = JSON.parse(localStorage.getItem('businessSubmissions') || '[]');
+            submissions.push(formData);
+            localStorage.setItem('businessSubmissions', JSON.stringify(submissions));
+
+            // Mostrar mensaje de éxito
+            successMsg.style.display = 'block';
+            errorMsg.style.display = 'none';
+            form.reset();
+
+            // Scroll al mensaje de éxito
+            successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Ocultar mensaje después de 5 segundos
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 5000);
+
+            return false;
+        }
+
+        // Inicializar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            renderBusinesses();
+        });
+    </script>
+</body>
+</html>

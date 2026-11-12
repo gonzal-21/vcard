@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Servicio de Trekking - Torres del Paine</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .report-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .report-header {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .report-header h1 {
+            color: white;
+            margin: 0 0 10px 0;
+            font-size: 2em;
+        }
+
+        .client-info {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .client-info h2 {
+            color: #007bff;
+            margin-top: 0;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .info-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-field label {
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .info-field input,
+        .info-field select,
+        .info-field textarea {
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+
+        .info-field input:focus,
+        .info-field select:focus,
+        .info-field textarea:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .evaluation-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .evaluation-section h3 {
+            color: #007bff;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3em;
+        }
+
+        .evaluation-section h3 i {
+            font-size: 1.2em;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            background: #e7f3ff;
+            transform: translateX(5px);
+        }
+
+        .checkbox-item.checked {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            margin-top: 2px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            flex: 1;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .rating-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .rating-label {
+            font-weight: bold;
+            min-width: 150px;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+        }
+
+        .rating-stars input[type="radio"] {
+            display: none;
+        }
+
+        .rating-stars label {
+            font-size: 1.8em;
+            color: #dee2e6;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .rating-stars input[type="radio"]:checked ~ label,
+        .rating-stars label:hover,
+        .rating-stars label:hover ~ label {
+            color: #ffc107;
+        }
+
+        .rating-stars {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+
+        .notes-field {
+            margin-top: 15px;
+        }
+
+        .notes-field textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 0.95em;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        .notes-field textarea:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .medical-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .data-input {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .data-input label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+
+        .data-input input {
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .status-good {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .summary-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .rating-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card report-container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Volver a la Virtual Card
+        </a>
+
+        <div class="report-header">
+            <h1><i class="fas fa-clipboard-check"></i> Reporte de Servicio de Trekking</h1>
+            <p>Sistema de Evaluación y Registro de Servicios en Torres del Paine</p>
+        </div>
+
+        <!-- Client Information -->
+        <div class="client-info">
+            <h2><i class="fas fa-user"></i> Información del Cliente</h2>
+            <div class="info-grid">
+                <div class="info-field">
+                    <label>Nombre Completo *</label>
+                    <input type="text" id="clientName" required>
+                </div>
+                <div class="info-field">
+                    <label>Nacionalidad</label>
+                    <input type="text" id="nationality">
+                </div>
+                <div class="info-field">
+                    <label>Edad</label>
+                    <input type="number" id="age" min="1" max="120">
+                </div>
+                <div class="info-field">
+                    <label>Sendero/Ruta</label>
+                    <select id="trail">
+                        <option value="">Seleccionar...</option>
+                        <option value="base-torres">Base Torres</option>
+                        <option value="circuito-w">Circuito W</option>
+                        <option value="circuito-o">Circuito O</option>
+                        <option value="glaciar-grey">Glaciar Grey</option>
+                        <option value="frances">Valle Francés</option>
+                        <option value="otros">Otros</option>
+                    </select>
+                </div>
+                <div class="info-field">
+                    <label>Fecha del Servicio</label>
+                    <input type="date" id="serviceDate">
+                </div>
+                <div class="info-field">
+                    <label>Guía Responsable</label>
+                    <input type="text" id="guideName" value="Gonzalo Emilio Frías Ojeda">
+                </div>
+            </div>
+        </div>
+
+        <!-- Equipment Evaluation -->
+        <div class="evaluation-section">
+            <h3><i class="fas fa-backpack"></i> Evaluación de Equipamiento</h3>
+            <div class="checkbox-group" id="equipmentChecks">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="eq1" onchange="updateCheckbox(this)">
+                    <label for="eq1">Calzado adecuado para trekking (botas impermeables)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="eq2" onchange="updateCheckbox(this)">
+                    <label for="eq2">Ropa térmica y capas adecuadas</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="eq3" onchange="updateCheckbox(this)">
+                    <label for="eq3">Chaqueta impermeable y cortavientos</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="eq4" onchange="updateCheckbox(this)">
+                    <label for="eq4">Mochila apropiada (30-40L)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="eq5" onchange="updateCheckbox(this)">
+                    <label for="eq5">Bastones de trekking</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="eq6" onchange="updateCheckbox(this)">
+                    <label for="eq6">Saco de dormir (si aplica)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="eq7" onchange="updateCheckbox(this)">
+                    <label for="eq7">Linterna/frontal con baterías</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="eq8" onchange="updateCheckbox(this)">
+                    <label for="eq8">Protección solar (lentes, bloqueador, gorro)</label>
+                </div>
+            </div>
+            <div class="notes-field">
+                <label><strong>Observaciones sobre equipamiento:</strong></label>
+                <textarea id="equipmentNotes" placeholder="Detalles adicionales sobre el estado y adecuación del equipamiento..."></textarea>
+            </div>
+        </div>
+
+        <!-- Food Supplies -->
+        <div class="evaluation-section">
+            <h3><i class="fas fa-utensils"></i> Evaluación de Alimentación</h3>
+            <div class="checkbox-group" id="foodChecks">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="food1" onchange="updateCheckbox(this)">
+                    <label for="food1">Alimentos suficientes para la duración del trekking</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="food2" onchange="updateCheckbox(this)">
+                    <label for="food2">Snacks energéticos (barras, frutos secos)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="food3" onchange="updateCheckbox(this)">
+                    <label for="food3">Hidratación adecuada (mínimo 2L de agua)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="food4" onchange="updateCheckbox(this)">
+                    <label for="food4">Sistema de purificación de agua</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="food5" onchange="updateCheckbox(this)">
+                    <label for="food5">Comidas balanceadas (proteínas, carbohidratos)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="food6" onchange="updateCheckbox(this)">
+                    <label for="food6">Alimentos de emergencia extra</label>
+                </div>
+            </div>
+            <div class="notes-field">
+                <label><strong>Observaciones sobre alimentación:</strong></label>
+                <textarea id="foodNotes" placeholder="Detalles sobre la cantidad y tipo de alimentos..."></textarea>
+            </div>
+        </div>
+
+        <!-- Medical Certification -->
+        <div class="evaluation-section">
+            <h3><i class="fas fa-file-medical"></i> Certificación Médica y Medicamentos</h3>
+            <div class="checkbox-group" id="medicalChecks">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="med1" onchange="updateCheckbox(this)">
+                    <label for="med1">Certificado médico presentado (para rutas exigentes)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="med2" onchange="updateCheckbox(this)">
+                    <label for="med2">Medicamentos personales declarados</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="med3" onchange="updateCheckbox(this)">
+                    <label for="med3">Recetas médicas para medicamentos controlados</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="med4" onchange="updateCheckbox(this)">
+                    <label for="med4">Historial de alergias documentado</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="med5" onchange="updateCheckbox(this)">
+                    <label for="med5">Condiciones médicas preexistentes informadas</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="med6" onchange="updateCheckbox(this)">
+                    <label for="med6">Seguro de viaje con cobertura médica</label>
+                </div>
+            </div>
+            <div class="notes-field">
+                <label><strong>Historial clínico relevante:</strong></label>
+                <textarea id="medicalHistory" placeholder="Lesiones previas, enfermedades crónicas, cirugías recientes, síntomas actuales..."></textarea>
+            </div>
+        </div>
+
+        <!-- First Aid Assistance -->
+        <div class="evaluation-section">
+            <h3><i class="fas fa-first-aid"></i> Asistencia de Primeros Auxilios</h3>
+            <div class="checkbox-group" id="firstAidChecks">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="aid1" onchange="updateCheckbox(this)">
+                    <label for="aid1">Solicitó asistencia médica durante el trekking</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="aid2" onchange="updateCheckbox(this)">
+                    <label for="aid2">Tratamiento de ampollas o rozaduras</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="aid3" onchange="updateCheckbox(this)">
+                    <label for="aid3">Atención por dolor muscular o articular</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="aid4" onchange="updateCheckbox(this)">
+                    <label for="aid4">Síntomas de mal de altura tratados</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="aid5" onchange="updateCheckbox(this)">
+                    <label for="aid5">Hidratación o alimentación de emergencia</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="aid6" onchange="updateCheckbox(this)">
+                    <label for="aid6">No requirió asistencia</label>
+                </div>
+            </div>
+            <div class="notes-field">
+                <label><strong>Detalles de asistencia prestada:</strong></label>
+                <textarea id="firstAidNotes" placeholder="Descripción de cualquier atención médica proporcionada, hora, ubicación..."></textarea>
+            </div>
+        </div>
+
+        <!-- Medical Evaluation by Trail -->
+        <div class="evaluation-section">
+            <h3><i class="fas fa-heartbeat"></i> Evaluación Médica por Sendero</h3>
+            <div class="medical-data">
+                <div class="data-input">
+                    <label>Nivel de Oxígeno (SpO2) %</label>
+                    <input type="number" id="oxygenLevel" min="0" max="100" placeholder="95-100">
+                </div>
+                <div class="data-input">
+                    <label>Presión Arterial Sistólica</label>
+                    <input type="number" id="systolic" placeholder="120">
+                </div>
+                <div class="data-input">
+                    <label>Presión Arterial Diastólica</label>
+                    <input type="number" id="diastolic" placeholder="80">
+                </div>
+                <div class="data-input">
+                    <label>Frecuencia Cardíaca (ppm)</label>
+                    <input type="number" id="heartRate" placeholder="60-100">
+                </div>
+                <div class="data-input">
+                    <label>Temperatura Corporal (°C)</label>
+                    <input type="number" step="0.1" id="temperature" placeholder="36.5">
+                </div>
+                <div class="data-input">
+                    <label>Punto de Control</label>
+                    <select id="checkpointLocation">
+                        <option value="">Seleccionar...</option>
+                        <option value="inicio">Punto de Inicio</option>
+                        <option value="intermedio">Punto Intermedio</option>
+                        <option value="cumbre">Cumbre/Destino</option>
+                        <option value="retorno">Punto de Retorno</option>
+                    </select>
+                </div>
+            </div>
+            <div class="notes-field">
+                <label><strong>Observaciones médicas del sendero:</strong></label>
+                <textarea id="medicalTrailNotes" placeholder="Síntomas observados, fatiga, respuesta al esfuerzo físico..."></textarea>
+            </div>
+        </div>
+
+        <!-- Technology Data -->
+        <div class="evaluation-section">
+            <h3><i class="fas fa-mobile-alt"></i> Datos Recopilados por Dispositivos Tecnológicos</h3>
+            <div class="checkbox-group" id="techChecks">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="tech1" onchange="updateCheckbox(this)">
+                    <label for="tech1">Datos de GPS/track del recorrido</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="tech2" onchange="updateCheckbox(this)">
+                    <label for="tech2">Monitor de frecuencia cardíaca</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="tech3" onchange="updateCheckbox(this)">
+                    <label for="tech3">Oxímetro de pulso portátil</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="tech4" onchange="updateCheckbox(this)">
+                    <label for="tech4">Aplicación de tracking de actividad</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="tech5" onchange="updateCheckbox(this)">
+                    <label for="tech5">Registro fotográfico del recorrido</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="tech6" onchange="updateCheckbox(this)">
+                    <label for="tech6">Comunicación satelital/radio disponible</label>
+                </div>
+            </div>
+            <div class="medical-data" style="margin-top: 20px;">
+                <div class="data-input">
+                    <label>Distancia Recorrida (km)</label>
+                    <input type="number" step="0.1" id="distance" placeholder="0.0">
+                </div>
+                <div class="data-input">
+                    <label>Desnivel Acumulado (m)</label>
+                    <input type="number" id="elevation" placeholder="0">
+                </div>
+                <div class="data-input">
+                    <label>Tiempo Total (horas)</label>
+                    <input type="number" step="0.5" id="duration" placeholder="0.0">
+                </div>
+                <div class="data-input">
+                    <label>Velocidad Promedio (km/h)</label>
+                    <input type="number" step="0.1" id="avgSpeed" placeholder="0.0">
+                </div>
+            </div>
+        </div>
+
+        <!-- Geostatistical Logistics -->
+        <div class="evaluation-section">
+            <h3><i class="fas fa-map-marked-alt"></i> Reporte Logístico Geoestadístico</h3>
+            <div class="checkbox-group" id="geoChecks">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="geo1" onchange="updateCheckbox(this)">
+                    <label for="geo1">Ruta completada según planificación</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="geo2" onchange="updateCheckbox(this)">
+                    <label for="geo2">Desviaciones o cambios de ruta necesarios</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="geo3" onchange="updateCheckbox(this)">
+                    <label for="geo3">Condiciones climáticas adversas enfrentadas</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="geo4" onchange="updateCheckbox(this)">
+                    <label for="geo4">Puntos de interés visitados según itinerario</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="geo5" onchange="updateCheckbox(this)">
+                    <label for="geo5">Tiempos de descanso adecuados</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="geo6" onchange="updateCheckbox(this)">
+                    <label for="geo6">Horarios cumplidos (inicio/fin)</label>
+                </div>
+            </div>
+            <div class="notes-field">
+                <label><strong>Detalles logísticos y geográficos:</strong></label>
+                <textarea id="geoNotes" placeholder="Condiciones del sendero, clima, desviaciones, puntos críticos..."></textarea>
+            </div>
+        </div>
+
+        <!-- Qualitative Evaluation -->
+        <div class="evaluation-section">
+            <h3><i class="fas fa-comments"></i> Evaluación Cualitativa: Diálogos e Interpretación del Entorno</h3>
+            
+            <div class="rating-group">
+                <span class="rating-label">Interpretación Flora:</span>
+                <div class="rating-stars" id="floraRating">
+                    <input type="radio" name="flora" id="flora5" value="5">
+                    <label for="flora5">★</label>
+                    <input type="radio" name="flora" id="flora4" value="4">
+                    <label for="flora4">★</label>
+                    <input type="radio" name="flora" id="flora3" value="3">
+                    <label for="flora3">★</label>
+                    <input type="radio" name="flora" id="flora2" value="2">
+                    <label for="flora2">★</label>
+                    <input type="radio" name="flora" id="flora1" value="1">
+                    <label for="flora1">★</label>
+                </div>
+            </div>
+
+            <div class="rating-group">
+                <span class="rating-label">Interpretación Fauna:</span>
+                <div class="rating-stars" id="faunaRating">
+                    <input type="radio" name="fauna" id="fauna5" value="5">
+                    <label for="fauna5">★</label>
+                    <input type="radio" name="fauna" id="fauna4" value="4">
+                    <label for="fauna4">★</label>
+                    <input type="radio" name="fauna" id="fauna3" value="3">
+                    <label for="fauna3">★</label>
+                    <input type="radio" name="fauna" id="fauna2" value="2">
+                    <label for="fauna2">★</label>
+                    <input type="radio" name="fauna" id="fauna1" value="1">
+                    <label for="fauna1">★</label>
+                </div>
+            </div>
+
+            <div class="rating-group">
+                <span class="rating-label">Geología y Geografía:</span>
+                <div class="rating-stars" id="geologyRating">
+                    <input type="radio" name="geology" id="geology5" value="5">
+                    <label for="geology5">★</label>
+                    <input type="radio" name="geology" id="geology4" value="4">
+                    <label for="geology4">★</label>
+                    <input type="radio" name="geology" id="geology3" value="3">
+                    <label for="geology3">★</label>
+                    <input type="radio" name="geology" id="geology2" value="2">
+                    <label for="geology2">★</label>
+                    <input type="radio" name="geology" id="geology1" value="1">
+                    <label for="geology1">★</label>
+                </div>
+            </div>
+
+            <div class="rating-group">
+                <span class="rating-label">Historia y Cultura:</span>
+                <div class="rating-stars" id="cultureRating">
+                    <input type="radio" name="culture" id="culture5" value="5">
+                    <label for="culture5">★</label>
+                    <input type="radio" name="culture" id="culture4" value="4">
+                    <label for="culture4">★</label>
+                    <input type="radio" name="culture" id="culture3" value="3">
+                    <label for="culture3">★</label>
+                    <input type="radio" name="culture" id="culture2" value="2">
+                    <label for="culture2">★</label>
+                    <input type="radio" name="culture" id="culture1" value="1">
+                    <label for="culture1">★</label>
+                </div>
+            </div>
+
+            <div class="rating-group">
+                <span class="rating-label">Comunicación y Diálogo:</span>
+                <div class="rating-stars" id="communicationRating">
+                    <input type="radio" name="communication" id="communication5" value="5">
+                    <label for="communication5">★</label>
+                    <input type="radio" name="communication" id="communication4" value="4">
+                    <label for="communication4">★</label>
+                    <input type="radio" name="communication" id="communication3" value="3">
+                    <label for="communication3">★</label>
+                    <input type="radio" name="communication" id="communication2" value="2">
+                    <label for="communication2">★</label>
+                    <input type="radio" name="communication" id="communication1" value="1">
+                    <label for="communication1">★</label>
+                </div>
+            </div>
+
+            <div class="notes-field">
+                <label><strong>Comentarios sobre la experiencia interpretativa:</strong></label>
+                <textarea id="interpretationNotes" placeholder="Temas discutidos, preguntas del cliente, puntos de interés especial, nivel de engagement..."></textarea>
+            </div>
+
+            <div class="notes-field">
+                <label><strong>Feedback del cliente:</strong></label>
+                <textarea id="clientFeedback" placeholder="Comentarios, sugerencias o impresiones expresadas por el cliente..."></textarea>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-box">
+            <h3><i class="fas fa-chart-line"></i> Resumen del Reporte</h3>
+            <div class="summary-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="totalChecked">0</span>
+                    <span class="stat-label">Items Verificados</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="completionRate">0%</span>
+                    <span class="stat-label">Completitud</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="avgRating">0.0</span>
+                    <span class="stat-label">Evaluación Promedio</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="safetyStatus">-</span>
+                    <span class="stat-label">Estado de Seguridad</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="generateReport()">
+                <i class="fas fa-file-pdf"></i> Generar Reporte PDF
+            </button>
+            <button class="btn btn-success" onclick="saveReport()">
+                <i class="fas fa-save"></i> Guardar en Sistema
+            </button>
+            <button class="btn btn-secondary" onclick="sendReport()">
+                <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Update checkbox styling
+        function updateCheckbox(checkbox) {
+            const item = checkbox.closest('.checkbox-item');
+            if (checkbox.checked) {
+                item.classList.add('checked');
+            } else {
+                item.classList.remove('checked');
+            }
+            updateSummary();
+        }
+
+        // Update summary statistics
+        function updateSummary() {
+            const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            const checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            const totalChecked = checkedBoxes.length;
+            const completionRate = Math.round((totalChecked / allCheckboxes.length) * 100);
+
+            document.getElementById('totalChecked').textContent = totalChecked;
+            document.getElementById('completionRate').textContent = completionRate + '%';
+
+            // Calculate average rating
+            const ratings = ['flora', 'fauna', 'geology', 'culture', 'communication'];
+            let totalRating = 0;
+            let ratingCount = 0;
+            
+            ratings.forEach(category => {
+                const selected = document.querySelector(`input[name="${category}"]:checked`);
+                if (selected) {
+                    totalRating += parseInt(selected.value);
+                    ratingCount++;
+                }
+            });
+
+            const avgRating = ratingCount > 0 ? (totalRating / ratingCount).toFixed(1) : 0;
+            document.getElementById('avgRating').textContent = avgRating;
+
+            // Determine safety status
+            const criticalChecks = ['eq1', 'eq3', 'food1', 'food3', 'med6'].filter(id => 
+                document.getElementById(id)?.checked
+            ).length;
+
+            let safetyStatus = criticalChecks >= 4 ? 'Óptimo' : criticalChecks >= 3 ? 'Adecuado' : 'Revisar';
+            document.getElementById('safetyStatus').textContent = safetyStatus;
+        }
+
+        // Generate PDF report
+        function generateReport() {
+            alert('Generando reporte PDF...\nEsta función requiere integración con servidor para generación de PDF.');
+        }
+
+        // Save report to system
+        function saveReport() {
+            const reportData = gatherReportData();
+            localStorage.setItem('trekkingReport_' + Date.now(), JSON.stringify(reportData));
+            alert('✅ Reporte guardado exitosamente en el sistema local.');
+        }
+
+        // Send report via WhatsApp
+        function sendReport() {
+            const clientName = document.getElementById('clientName').value || 'Cliente';
+            const trail = document.getElementById('trail').selectedOptions[0]?.text || 'No especificado';
+            const date = document.getElementById('serviceDate').value || 'Fecha no especificada';
+            
+            let message = `📋 *REPORTE DE SERVICIO DE TREKKING*\n\n`;
+            message += `👤 Cliente: ${clientName}\n`;
+            message += `🥾 Sendero: ${trail}\n`;
+            message += `📅 Fecha: ${date}\n`;
+            message += `📊 Completitud: ${document.getElementById('completionRate').textContent}\n`;
+            message += `⭐ Evaluación: ${document.getElementById('avgRating').textContent}/5\n`;
+            message += `🛡️ Seguridad: ${document.getElementById('safetyStatus').textContent}\n\n`;
+            message += `Reporte completo generado por Gonzalo Frías - Guía Torres del Paine`;
+
+            const whatsappUrl = `https://wa.me/56961324561?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Gather all report data
+        function gatherReportData() {
+            const data = {
+                timestamp: new Date().toISOString(),
+                clientInfo: {
+                    name: document.getElementById('clientName').value,
+                    nationality: document.getElementById('nationality').value,
+                    age: document.getElementById('age').value,
+                    trail: document.getElementById('trail').value,
+                    date: document.getElementById('serviceDate').value,
+                    guide: document.getElementById('guideName').value
+                },
+                checkboxes: {},
+                medicalData: {
+                    oxygenLevel: document.getElementById('oxygenLevel').value,
+                    systolic: document.getElementById('systolic').value,
+                    diastolic: document.getElementById('diastolic').value,
+                    heartRate: document.getElementById('heartRate').value,
+                    temperature: document.getElementById('temperature').value
+                },
+                ratings: {},
+                notes: {
+                    equipment: document.getElementById('equipmentNotes').value,
+                    food: document.getElementById('foodNotes').value,
+                    medical: document.getElementById('medicalHistory').value,
+                    firstAid: document.getElementById('firstAidNotes').value,
+                    medicalTrail: document.getElementById('medicalTrailNotes').value,
+                    geo: document.getElementById('geoNotes').value,
+                    interpretation: document.getElementById('interpretationNotes').value,
+                    feedback: document.getElementById('clientFeedback').value
+                }
+            };
+
+            // Gather checkbox states
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                data.checkboxes[cb.id] = cb.checked;
+            });
+
+            // Gather ratings
+            ['flora', 'fauna', 'geology', 'culture', 'communication'].forEach(category => {
+                const selected = document.querySelector(`input[name="${category}"]:checked`);
+                data.ratings[category] = selected ? parseInt(selected.value) : 0;
+            });
+
+            return data;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSummary();
+            
+            // Set current date
+            document.getElementById('serviceDate').valueAsDate = new Date();
+        });
+    </script>
+</body>
+</html>
